@@ -1,4 +1,4 @@
-from Flask  import Flask,g
+from flask import Flask,g,render_template,request,redirect
 
 import sqlite3
 
@@ -17,3 +17,35 @@ def close_connection(exception):
     db = getattr(g, '_database' , None)
     if db is not None:
         db.close()
+
+@app.route('/')
+def home():
+    cursor = get_db().cursor()
+    sql = 'SELECT * FROM Video'
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    return render_template("Video.html" , results=results)
+
+@app.route('/add', methods=['GET','POST'])
+def add():
+    if request.method == 'POST':
+        cursor = get_db().cursor()
+        new_name = request.form['item_Video']
+        new_description = request.form['item_comment']
+        sql = 'INSERT INTO Video(video,comment) VALUES (?,?)'
+        cursor.execute(sql,(new_Video,new_comment))
+        get_db().commit()
+    return redirect('/')
+
+@app.route('/delete', methods=['GET','POST'])
+def delete():
+    if request.method =='POST':
+        cursor = get_db().cursor()
+        id = int(request.form['item_Video'])
+        sql = 'DELETE FROM Video WHERE id=?'
+        cursor.execute(sql,(id,))
+        get_db().commit()
+    return redirect('/')
+
+if __name__ ==   '__main__':
+    app.run(debug=True)
