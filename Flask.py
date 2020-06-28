@@ -30,9 +30,9 @@ def home():
 def add():
     if request.method == 'POST':
         cursor = get_db().cursor()
-        new_name = request.form['item_Video']
-        new_description = request.form['item_comment']
-        sql = 'INSERT INTO Video(video,comment) VALUES (?,?)'
+        new_Video = request.form['item_Video']
+        new_comment = request.form['item_comment']
+        sql = 'INSERT INTO comment(video,comment) VALUES (?,?)'
         cursor.execute(sql,(new_Video,new_comment))
         get_db().commit()
     return redirect('/')
