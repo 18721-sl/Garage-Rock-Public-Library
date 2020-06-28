@@ -24,7 +24,7 @@ def home():
     sql = 'SELECT * FROM Video'
     cursor.execute(sql)
     results = cursor.fetchall()
-    return render_template("Video.html" , results=results)
+    return render_template("Garage Rock Public Library.html" , results=results)
 
 @app.route('/add', methods=['GET','POST'])
 def add():
